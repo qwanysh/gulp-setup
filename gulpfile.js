@@ -12,6 +12,7 @@ const del = require('del');
 const server = require('browser-sync').create();
 
 const paths = {
+  html: '*.html',
   styles: {
     src: 'src/scss/**/*.scss',
     dest: 'dist/css',
@@ -53,9 +54,9 @@ const serve = () => {
   build();
 
   server.init({ server: { baseDir: './' } });
-  gulp.watch('./src/scss/**/*.scss', compileStyles);
-  gulp.watch('./*.html').on('change', server.reload);
-  gulp.watch('./src/js/**/*.js', compileScripts).on('change', server.reload);
+  gulp.watch(paths.styles.src, compileStyles);
+  gulp.watch(paths.html).on('change', server.reload);
+  gulp.watch(paths.scripts.src, compileScripts).on('change', server.reload);
 };
 
 exports.serve = serve;
