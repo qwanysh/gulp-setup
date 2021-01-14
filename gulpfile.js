@@ -6,15 +6,17 @@ const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
+const rename = require('gulp-rename');
 const browserSync = require('browser-sync').create();
 
 const compileStyles = () => {
   return gulp
     .src('./src/scss/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer())
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(autoprefixer({ cascade: false }))
     .pipe(sourcemaps.write())
+    .pipe(rename('style.min.css'))
     .pipe(gulp.dest('./dist/css'))
     .pipe(browserSync.stream());
 };
